@@ -13,6 +13,7 @@ def get_db():
         port=int(os.environ.get("MYSQLPORT")),
         cursorclass=pymysql.cursors.DictCursor
     )
+
 # ================== HOME ==================
 @app.route("/")
 def index():
