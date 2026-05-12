@@ -1,17 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for
 import pymysql
+import os
 
 app = Flask(__name__)
 
 def get_db():
     return pymysql.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="buket_shop",
+        host=os.environ.get("MYSQLHOST"),
+        user=os.environ.get("MYSQLUSER"),
+        password=os.environ.get("MYSQLPASSWORD"),
+        database=os.environ.get("MYSQLDATABASE"),
+        port=int(os.environ.get("MYSQLPORT")),
         cursorclass=pymysql.cursors.DictCursor
     )
-
 # ================== HOME ==================
 @app.route("/")
 def index():
