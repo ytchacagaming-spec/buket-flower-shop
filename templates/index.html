@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero-home">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="hero-label">SHA BOUQUETS</p>
+
+                <h1>Hadiah Cantik untuk Momen Spesialmu</h1>
+
+                <p class="hero-desc">
+                    Sha Bouquets menyediakan berbagai buket cantik, unik, dan penuh makna
+                    untuk wisuda, ulang tahun, anniversary, dan hadiah orang tersayang.
+                </p>
+
+                <a href="/katalog" class="btn btn-pink">Lihat Katalog Buket</a>
+                <a href="https://wa.me/6289510216171" class="btn btn-outline-pink" target="_blank">
+                    Kontak Kami
+                </a>
+            </div>
+
+            <div class="col-md-6 text-center">
+                <img src="{{ url_for('static', filename='images/i1.jpeg') }}" class="hero-img">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROMO BANNER -->
+<section class="container my-5">
+    <div class="promo-banner">
+        <div>
+            <p class="promo-label">PROMO SPESIAL</p>
+            <h2>Diskon 10% untuk Buket Wisuda 🎓</h2>
+            <p>Rayakan momen kelulusan dengan buket cantik dari Sha Bouquets. Promo berlaku untuk pemesanan minggu ini.</p>
+        </div>
+
+        <a href="/katalog" class="btn btn-light">
+            Lihat Promo
+        </a>
+    </div>
+</section>
+
+
+<!-- CARA ORDER -->
+<section class="container my-5">
+    <p class="hero-label">CARA ORDER</p>
+    <h2 class="fw-bold mb-4">Pesan Buket dengan Mudah</h2>
+
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <div class="order-card">
+                <div class="order-number">1</div>
+                <h5>Pilih Buket</h5>
+                <p>Pilih buket favoritmu melalui halaman katalog.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="order-card">
+                <div class="order-number">2</div>
+                <h5>Lihat Detail</h5>
+                <p>Klik detail produk untuk melihat harga dan deskripsi.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="order-card">
+                <div class="order-number">3</div>
+                <h5>Pesan via WhatsApp</h5>
+                <p>Klik tombol WhatsApp untuk mengirim pesanan.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="order-card">
+                <div class="order-number">4</div>
+                <h5>Konfirmasi</h5>
+                <p>Konfirmasi detail pesanan, tanggal, dan alamat.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- CUSTOM BUKET -->
+<section class="container my-5">
+    <div class="custom-box">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <p class="hero-label">CUSTOM BUKET</p>
+                <h2 class="fw-bold">Mau Buket Sesuai Keinginanmu?</h2>
+                <p>
+                    Sha Bouquets menerima custom buket sesuai tema, warna, isi, dan budget.
+                    Cocok untuk hadiah wisuda, ulang tahun, anniversary, valentine, atau kejutan spesial lainnya.
+                </p>
+
+                <ul>
+                    <li>Bisa pilih tema dan warna buket</li>
+                    <li>Bisa custom isi buket sesuai request</li>
+                    <li>Cocok untuk hadiah personal yang lebih berkesan</li>
+                </ul>
+
+                <a href="https://wa.me/6289510216171?text=Halo,%20saya%20mau%20request%20custom%20buket"
+                   target="_blank"
+                   class="btn btn-pink">
+                    Request Custom via WhatsApp
+                </a>
+            </div>
+
+            <div class="col-md-5 text-center">
+                <img src="{{ url_for('static', filename='images/i2.jpeg') }}" class="custom-img">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container my-5">
+    <h2 class="fw-bold mb-4">Apa Kata Pelanggan?</h2>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="testi-card">
+                <p>⭐⭐⭐⭐⭐</p>
+                <p>"Gak nyangka buketnya sekeren ini. Pacar saya langsung pamer ke teman-temannya mantap!"</p>
+                <strong>- Riski</strong>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="testi-card">
+                <p>⭐⭐⭐⭐⭐</p>
+                <p>"Pelayanannya ramah, respon cepat, dan buketnya bagus cocok banget buat hadiah wisuda."</p>
+                <strong>- Sulis</strong>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="testi-card">
+                <p>⭐⭐⭐⭐⭐</p>
+                <p>"Packaging rapi dan tampilannya aesthetic. Dikirim keluar kota aman, recommended banget!"</p>
+                <strong>- Ninis</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container my-5">
+    <h2 class="fw-bold mb-4">Pertanyaan Umum</h2>
+
+    <div class="faq-box">
+        <div class="faq-item">
+            <h5>Apakah bisa custom buket?</h5>
+            <p>Bisa. Kamu dapat request tema, warna, isi buket, dan tambahan sesuai kebutuhan.</p>
+        </div>
+
+        <div class="faq-item">
+            <h5>Berapa lama proses pengerjaan?</h5>
+            <p>Biasanya 1–2 hari, tergantung jenis buket dan tingkat kerumitan pesanan.</p>
+        </div>
+
+        <div class="faq-item">
+            <h5>Bagaimana cara pesan?</h5>
+            <p>Pilih produk, klik Detail Produk, lalu tekan tombol Pesan via WhatsApp.</p>
+        </div>
+
+        <div class="faq-item">
+            <h5>Apakah bisa pesan mendadak?</h5>
+            <p>Bisa jika slot masih tersedia. Silakan hubungi WhatsApp terlebih dahulu.</p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

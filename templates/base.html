@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Sha Bouquets</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<div class="chatbot-button" onclick="toggleChatbot()">🤖</div>
+
+<div class="chatbot-box" id="chatbotBox">
+    <div class="chatbot-header">
+        <div>
+            <strong>Asisten Sha</strong>
+            <p>Tanya buket & info cepat</p>
+        </div>
+        <span onclick="toggleChatbot()">×</span>
+    </div>
+
+    <div class="chatbot-body" id="chatbotBody">
+        <div class="bot-message">
+            Halo 👋 Saya Asisten Sha Bouquets. Kamu bisa tanya katalog, harga, cara pesan, atau kontak kami.
+        </div>
+
+        <div class="quick-chat">
+            <button onclick="quickAsk('Katalog buket')">Katalog buket</button>
+            <button onclick="quickAsk('Cara pesan')">Cara pesan</button>
+            <button onclick="quickAsk('Harga')">Harga</button>
+            <button onclick="quickAsk('Kontak')">Kontak</button>
+        </div>
+    </div>
+
+    <div class="chatbot-footer">
+        <input type="text" id="chatInput" placeholder="Tanya sesuatu...">
+        <button onclick="sendChat()">Kirim</button>
+    </div>
+</div>
+
+<script>
+function toggleChatbot() {
+    const box = document.getElementById("chatbotBox");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function quickAsk(text) {
+    document.getElementById("chatInput").value = text;
+    sendChat();
+}
+
+function sendChat() {
+    const input = document.getElementById("chatInput");
+    const body = document.getElementById("chatbotBody");
+    const text = input.value.trim();
+
+    if (text === "") return;
+
+    body.innerHTML += `<div class="user-message">${text}</div>`;
+
+    let reply = "Maaf, saya belum paham. Kamu bisa tanya katalog, harga, cara pesan, atau kontak.";
+
+    if (text.toLowerCase().includes("katalog")) {
+        reply = "Kamu bisa melihat semua pilihan buket di menu Katalog Buket 💐";
+    } else if (text.toLowerCase().includes("cara pesan")) {
+        reply = "Cara pesan mudah: pilih buket, klik Detail Produk, lalu klik Pesan via WhatsApp.";
+    } else if (text.toLowerCase().includes("harga")) {
+        reply = "Harga buket tersedia di setiap produk. Kamu juga bisa urutkan dari harga termurah atau termahal.";
+    } else if (text.toLowerCase().includes("kontak")) {
+        reply = "Kamu bisa menghubungi kami lewat WhatsApp: 089510216171 atau Instagram @sha.bouquets.";
+    }
+
+    body.innerHTML += `<div class="bot-message">${reply}</div>`;
+    input.value = "";
+    body.scrollTop = body.scrollHeight;
+}
+</script>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">💐 Sha Bouquets</a>
+
+        <div>
+            <a class="nav-link d-inline mx-2" href="/">Home</a>
+            <a class="nav-link d-inline mx-2" href="/katalog">Katalog Buket</a>
+            <a class="nav-link d-inline mx-2" href="/tentang">Tentang</a>
+            <a class="nav-link d-inline mx-2" href="/kontak">Kontak</a>
+        </div>
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<footer class="footer text-center">
+    <p>© 2026 Sha Bouquets | WhatsApp: 089510216171 Instagram: @sha.bouquets</p>
+</footer>
+
+</body>
+</html>

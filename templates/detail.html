@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container my-5">
+    <div class="row align-items-center">
+
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename=product.image) }}" class="img-fluid detail-img">
+        </div>
+
+        <div class="col-md-6">
+            <h2>{{ product.name }}</h2>
+            <p class="category">{{ product.category }}</p>
+            <h4 class="price">Rp {{ "{:,}".format(product.price).replace(",", ".") }}</h4>
+            <p class="detail-desc">{{ product.description }}</p>
+
+            <div class="mb-3">
+                <label class="fw-bold mt-3">Tambahan:</label><br>
+
+                <label>
+                    <input type="radio" name="additional" value="Tanpa tambahan" checked>
+                    Tanpa tambahan
+                </label><br>
+
+                <label>
+                    <input type="radio" name="additional" value="Greeting Tape">
+                    Greeting Tape
+                </label><br>
+
+                <label>
+                    <input type="radio" name="additional" value="Greeting Card">
+                    Greeting Card
+                </label><br>
+
+                <label>
+                    <input type="radio" name="additional" value="Greeting Akrilik">
+                    Greeting Akrilik
+                </label>
+            </div>
+
+            <a href="#" onclick="kirimWA()" class="btn btn-success me-2">
+                Pesan via WhatsApp
+            </a>
+
+            <a href="/katalog" class="btn btn-secondary">
+                Kembali
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function kirimWA() {
+    const tambahan = document.querySelector('input[name="additional"]:checked').value;
+
+    let pesan = "Halo, saya mau pesan {{ product.name }}\n";
+    pesan += "Kategori: {{ product.category }}\n";
+    pesan += "Harga: Rp {{ '{:,}'.format(product.price).replace(',', '.') }}\n";
+    pesan += "Tambahan: " + tambahan;
+
+    const url = "https://wa.me/6289510216171?text=" + encodeURIComponent(pesan);
+    window.open(url, "_blank");
+}
+</script>
+
+{% endblock %}

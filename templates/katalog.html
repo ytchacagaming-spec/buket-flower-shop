@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="container my-5">
+    <p class="text-uppercase fw-bold text-pink">Katalog Buket</p>
+    <h2 class="mb-3 katalog-title">Beragam Buket Pilihan</h2>
+    <p class="mb-4">Temukan buket favoritmu dengan mudah 🌸
+Gunakan fitur pencarian atau pilih kategori sesuai keinginan, lalu urutkan untuk hasil terbaik.
+Ingin yang paling banyak diminati? Klik Best Seller dan lihat pilihan terfavorit 💖</p>
+
+    <div class="filter-box mb-4">
+        <div class="row g-3 align-items-end">
+
+            <div class="col-md-3">
+                <label class="fw-bold mb-2">Cari Buket</label>
+                <input type="text" id="searchInput" class="form-control"
+                       placeholder="Cari nama buket..." onkeyup="filterProducts()">
+            </div>
+
+            <div class="col-md-3">
+                <label class="fw-bold mb-2">Kategori</label>
+                <select id="categoryFilter" class="form-control" onchange="filterProducts()">
+                    <option value="all">Semua Kategori</option>
+                    <option value="Snack">Snack</option>
+                    <option value="Box">Box</option>
+                    <option value="Graduation">Graduation</option>
+                    <option value="Money">Money</option>
+                    <option value="Sash">Sash</option>
+                    <option value="Ring">Ring</option>
+                    <option value="Basket">Basket</option>
+                    <option value="Vase">Vase</option>
+                    <option value="Flower">Flower</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="fw-bold mb-2">Urutkan</label>
+                <select id="sortFilter" class="form-control" onchange="filterProducts()">
+                    <option value="default">Urutkan</option>
+                    <option value="low">Harga Termurah</option>
+                    <option value="high">Harga Termahal</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="fw-bold mb-2 invisible">Best</label>
+                <button type="button" id="bestSellerBtn" class="form-control text-center filter-btn">
+                    🔥 Best Seller
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <button onclick="resetFilter()" class="btn btn-outline-pink mb-4">
+        Reset Filter
+    </button>
+
+    <div class="row" id="productList">
+        {% for product in products %}
+        <div class="col-md-4 mb-4 product-item"
+             data-name="{{ product.name }}"
+             data-category="{{ product.category }}"
+             data-price="{{ product.price }}"
+             data-best="{{ product.best_seller }}">
+
+            <div class="card product-card position-relative">
+
+                {% if product.best_seller == 1 %}
+                <span class="badge-best">🔥 Best Seller</span>
+                {% endif %}
+
+                <img src="{{ url_for('static', filename=product.image) }}"
+                     class="card-img-top product-img"
+                     alt="{{ product.name }}">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="category">{{ product.category }}</p>
+                    {% if product.category == 'Graduation' %}
+                        <span class="badge-promo">Diskon 10%</span>
+                        <p class="price">
+                            <span class="old-price">
+                                Rp {{ "{:,}".format(product.price).replace(",", ".") }}
+                            </span><br>
+                            Rp {{ "{:,}".format((product.price * 0.9) | int).replace(",", ".") }}
+                        </p>
+                    {% else %}
+                        <p class="price">
+                            Rp {{ "{:,}".format(product.price).replace(",", ".") }}
+                        </p>
+                    {% endif %}
+
+                    <a href="/product/{{ product.id }}" class="btn btn-pink w-100">
+                        Detail Produk
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const sortFilter = document.getElementById("sortFilter");
+    const productList = document.getElementById("productList");
+    const bestSellerBtn = document.getElementById("bestSellerBtn");
+
+    let bestSellerActive = false;
+    let originalOrder = [];
+
+    document.querySelectorAll(".product-item").forEach(function(item) {
+        originalOrder.push(item);
+    });
+
+    bestSellerBtn.addEventListener("click", function() {
+        bestSellerActive = !bestSellerActive;
+        bestSellerBtn.classList.toggle("active");
+
+        if (bestSellerActive) {
+            bestSellerBtn.innerHTML = "🔥 Best Seller";
+        } else {
+            bestSellerBtn.innerHTML = "🔥 Best Seller";
+        }
+
+        filterProducts();
+    });
+
+    function filterProducts() {
+        const searchValue = searchInput.value.toLowerCase();
+        const categoryValue = categoryFilter.value;
+        const products = Array.from(document.querySelectorAll(".product-item"));
+
+        products.forEach(function(product) {
+            const name = product.dataset.name.toLowerCase();
+            const category = product.dataset.category;
+            const best = product.dataset.best;
+
+            const matchName = name.includes(searchValue);
+            const matchCategory = categoryValue === "all" || category === categoryValue;
+            const matchBest = !bestSellerActive || best === "1";
+
+            product.style.display = (matchName && matchCategory && matchBest) ? "block" : "none";
+        });
+
+        sortProducts();
+    }
+
+    function sortProducts() {
+        const products = Array.from(document.querySelectorAll(".product-item"));
+
+        if (!bestSellerActive && sortFilter.value === "default") {
+            originalOrder.forEach(function(product) {
+                productList.appendChild(product);
+            });
+            return;
+        }
+
+        if (sortFilter.value === "low") {
+            products.sort(function(a, b) {
+                return Number(a.dataset.price) - Number(b.dataset.price);
+            });
+        } else if (sortFilter.value === "high") {
+            products.sort(function(a, b) {
+                return Number(b.dataset.price) - Number(a.dataset.price);
+            });
+        }
+
+        products.forEach(function(product) {
+            productList.appendChild(product);
+        });
+    }
+
+    function resetFilter() {
+        searchInput.value = "";
+        categoryFilter.value = "all";
+        sortFilter.value = "default";
+        bestSellerActive = false;
+
+        bestSellerBtn.classList.remove("active");
+        bestSellerBtn.innerHTML = "🔥 Best Seller";
+
+        originalOrder.forEach(function(product) {
+            product.style.display = "block";
+            productList.appendChild(product);
+        });
+    }
+</script>
+
+{% endblock %}
